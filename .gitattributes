@@ -1,0 +1,9 @@
+# Os scripts rodam em Linux (a VM da sessão na nuvem é Ubuntu). Com CRLF o
+# shebang vira "/bin/bash\r" e o shell responde "bad interpreter" — o hook
+# falha em silêncio e o Chrome nunca é instalado.
+*.sh   text eol=lf
+*.mjs  text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.css  text eol=lf
+*.html text eol=lf

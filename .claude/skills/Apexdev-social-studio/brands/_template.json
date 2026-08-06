@@ -1,0 +1,50 @@
+{
+  "$doc": "Copie este arquivo para brands/<empresa>.json. Tudo em colors/fonts vira variável CSS com o mesmo nome (--bg, --accent, --font-display...). O resto é briefing pra copy.",
+
+  "empresa": "Nome da Empresa",
+  "handle": "@handle",
+  "site": "https://exemplo.com",
+
+  "colors": {
+    "bg": "#0a0a0a",
+    "surface": "#151515",
+    "line": "#2a2a2a",
+    "fg": "#fafafa",
+    "muted": "#a1a1aa",
+    "accent": "#c21fe0",
+    "accent-2": "#7c3aed",
+    "on-accent": "#ffffff"
+  },
+
+  "fonts": {
+    "font-display": "'Archivo', 'Arial Black', system-ui, sans-serif",
+    "font-body": "'Inter', system-ui, -apple-system, sans-serif"
+  },
+
+  "logo": {
+    "claro": "caminho/para/logo_white.svg",
+    "escuro": "caminho/para/logo_black.svg",
+    "simbolo": "caminho/para/favicon.svg"
+  },
+
+  "voz": {
+    "tom": "Direto, técnico, sem hype. Fala com quem decide.",
+    "pessoa": "primeira do plural (nós) — evitar 'você merece', 'transforme sua vida'",
+    "evitar": ["revolucionário", "game changer", "solução completa", "excelência", "emojis em excesso", "🚀"],
+    "usar": ["números concretos", "prazo", "nome do problema antes da solução"]
+  },
+
+  "publico": "Quem lê: cargo, dor principal, objeção mais comum.",
+  "provas": ["Métrica ou case 1", "Métrica ou case 2"],
+  "ctas": ["Fala com a gente no link da bio", "Manda 'ORÇAMENTO' no direct"],
+
+  "hashtags": {
+    "fixas": ["#suaempresa"],
+    "rotativas": ["#tag1", "#tag2", "#tag3", "#tag4", "#tag5"]
+  },
+
+  "restricoes": [
+    "Ex.: nunca prometer resultado garantido",
+    "Ex.: nunca usar arte de marca de terceiros"
+  ]
+}

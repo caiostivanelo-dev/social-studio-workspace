@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel</title>
+<!-- ordem importa: arquétipos primeiro (composição), marca depois (estilo) -->
+<link rel="stylesheet" href="archetypes.css">
+<link rel="stylesheet" href="brand.css">
+<style>
+  /* Fontes da marca. Em PNG o @import do Google resolve; em vídeo NÃO —
+     o render do HyperFrames é determinístico e não busca rede, então lá as
+     fontes precisam ser .woff2 locais. */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+  /* Sobrescritas DESTA marca, se houver. Exemplo: fonte de uso restrito que só
+     pode aparecer na assinatura e no preço — o resto usa a de corpo.
+     .titulo{font-family:var(--font-body)} */
+</style>
+</head>
+<body>
+
+<!-- Cada <section class="board a-*"> é um slide.
+     ALTERNE os arquétipos: seis boards com o mesmo arquétipo saem seis peças
+     iguais, por mais rica que seja a identidade. Lista em SKILL.md. -->
+
+<!-- 01 · capa com foto -->
+<section class="board a-capa-foto">
+  <p class="kicker">Categoria · Lugar</p>
+  <div class="corpo">
+    <img class="moldura" src="assets/FOTO-CAPA.webp" alt="" style="height:58%">
+    <h1 class="titulo">O título que para o scroll</h1>
+    <p class="texto">Uma linha de contexto que não repete o título.</p>
+  </div>
+  <div class="sig">
+    <div><div class="marca">Nome da Marca</div><div class="legal">Assinatura legal / registro</div></div>
+    <span class="swipe">Arrasta</span>
+  </div>
+</section>
+
+<!-- 02 · número grande — uma métrica carrega o board -->
+<section class="board a-numero">
+  <p class="kicker">O dado</p><span class="index">02</span>
+  <div class="corpo">
+    <span class="valor">00</span>
+    <p class="texto forte">O que esse número significa, em uma frase.</p>
+  </div>
+  <div class="sig"><div><div class="marca">Nome da Marca</div><div class="legal">Assinatura legal</div></div></div>
+</section>
+
+<!-- 03 · grade de dados — substitui adjetivo por número -->
+<section class="board a-dados">
+  <p class="kicker">A ficha</p><span class="index">03</span>
+  <div class="corpo">
+    <dl class="grade">
+      <div><dt>Rótulo</dt><dd>Valor</dd></div>
+      <div><dt>Rótulo</dt><dd>Valor</dd></div>
+      <div><dt>Rótulo</dt><dd>Valor</dd></div>
+      <div><dt>Rótulo</dt><dd>Valor</dd></div>
+    </dl>
+  </div>
+  <div class="sig"><div><div class="marca">Nome da Marca</div><div class="legal">Assinatura legal</div></div></div>
+</section>
+
+<!-- 04 · lista + painel na superfície de ambiente da marca -->
+<section class="board a-lista">
+  <p class="kicker">Os pontos</p><span class="index">04</span>
+  <div class="corpo">
+    <h2 class="titulo sm">Um título curto.</h2>
+    <div class="chips"><span>Item</span><span>Item</span><span>Item</span><span>Item</span></div>
+    <div class="painel"><p class="texto forte" style="margin:0">Um argumento que quase ninguém faz.</p></div>
+  </div>
+  <div class="sig"><div><div class="marca">Nome da Marca</div><div class="legal">Assinatura legal</div></div></div>
+</section>
+
+<!-- 05 · CTA. Um só, tirado do array `ctas` do brand.json. -->
+<section class="board a-cta">
+  <p class="kicker">Chamada</p><span class="index">05</span>
+  <div class="corpo">
+    <h2 class="titulo sm">A frase final.</h2>
+    <div class="bloco">
+      <span class="rot">O que a pessoa faz agora</span>
+      <span class="val">(00) 00000-0000</span>
+    </div>
+  </div>
+  <div class="sig">
+    <div><div class="marca">Nome da Marca</div><div class="legal">Assinatura legal</div></div>
+    <span class="fim">site.com.br</span>
+  </div>
+</section>
+
+<script>
+  // O shoot.mjs chama ?board=N&st=..&sb=..; sem query, entra em modo preview
+  // e empilha todos os boards com as guias de área segura.
+  const q = new URLSearchParams(location.search);
+  const r = document.documentElement.style;
+  for (const [k, v] of [['top','st'],['bottom','sb'],['left','sl'],['right','sr']])
+    r.setProperty(`--safe-${k}`, (q.get(v) || 0) + 'px');
+  const n = Number(q.get('board'));
+  if (n) document.querySelectorAll('.board')[n - 1]?.classList.add('on');
+  else document.body.classList.add('preview');
+</script>
+</body>
+</html>

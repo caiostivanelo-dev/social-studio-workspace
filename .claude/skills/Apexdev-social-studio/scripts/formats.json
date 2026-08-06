@@ -1,0 +1,15 @@
+{
+  "ig-post":      { "w": 1080, "h": 1350, "nome": "Instagram feed (retrato 4:5) — padrão para post e carrossel" },
+  "ig-square":    { "w": 1080, "h": 1080, "nome": "Instagram feed (quadrado 1:1)" },
+  "ig-story":     { "w": 1080, "h": 1920, "nome": "Instagram/Facebook Story", "safe": { "top": 250, "bottom": 320 } },
+  "ig-reel-capa": { "w": 1080, "h": 1920, "nome": "Capa de Reel", "safe": { "top": 180, "bottom": 420 } },
+  "tiktok":       { "w": 1080, "h": 1920, "nome": "TikTok", "safe": { "top": 120, "bottom": 500, "right": 180 } },
+  "li-post":      { "w": 1200, "h": 1200, "nome": "LinkedIn feed (quadrado)" },
+  "li-doc":       { "w": 1200, "h": 1500, "nome": "LinkedIn carrossel/documento" },
+  "li-wide":      { "w": 1200, "h": 627,  "nome": "LinkedIn link/landscape" },
+  "x-post":       { "w": 1600, "h": 900,  "nome": "X/Twitter imagem" },
+  "fb-post":      { "w": 1200, "h": 630,  "nome": "Facebook feed" },
+  "yt-thumb":     { "w": 1280, "h": 720,  "nome": "Thumbnail do YouTube", "safe": { "bottom": 90, "right": 130 } },
+  "pin":          { "w": 1000, "h": 1500, "nome": "Pinterest pin" },
+  "wpp-status":   { "w": 1080, "h": 1920, "nome": "Status do WhatsApp", "safe": { "top": 220, "bottom": 260 } }
+}

@@ -1,0 +1,169 @@
+/* ============================================================================
+   Arquétipos de board — Social Studio
+   ----------------------------------------------------------------------------
+   REGRA ÚNICA: este arquivo é COMPOSIÇÃO, não estilo.
+   Onde as coisas sentam, a hierarquia, o ritmo vertical. Nada aqui decide cor,
+   raio, borda, sombra ou peso — tudo isso vem de brand.css, gerado da
+   identidade do cliente. Se você escrever um hex ou um `border-radius: 12px`
+   literal aqui, quebrou a regra e o próximo cliente herda a marca do anterior.
+
+   O que o brand.css precisa fornecer:
+     cor      --bg --surface --line --fg --muted --accent --accent-2 --on-accent
+     fonte    --font-display --font-body
+     estilo   --radius-chip --radius-card --radius-frame --borda --sombra --ambiente
+   Faltou algum? O fallback abaixo segura, mas a peça sai genérica.
+   ========================================================================== */
+
+:root{
+  --bg:#fff; --surface:#f4f4f5; --line:#e4e4e7; --fg:#18181b; --muted:#71717a;
+  --accent:#18181b; --accent-2:#e4e4e7; --on-accent:#18181b;
+  --font-display:system-ui,sans-serif; --font-body:system-ui,sans-serif;
+  --radius-chip:8px; --radius-card:14px; --radius-frame:20px;
+  --borda:1px; --sombra:none; --ambiente:var(--surface);
+  --safe-top:0px; --safe-bottom:0px; --pad:88px;
+  --display-w:800; --display-track:-.03em;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;background:#000;-webkit-font-smoothing:antialiased}
+
+/* ---------------------------------------------------------------- o board --
+   grid de 3 faixas: topo / corpo elástico / assinatura.
+   O corpo é 1fr e o conteúdo dele DISTRIBUI — foi o `flex + spacer no fim`
+   que produzia metade da peça em branco, porque nada ocupava o meio. */
+.board{
+  display:none; width:100vw; height:100vh; position:relative; overflow:hidden;
+  background:var(--bg); color:var(--fg); font-family:var(--font-body);
+  padding:calc(var(--pad) + var(--safe-top)) var(--pad) calc(var(--pad) + var(--safe-bottom));
+}
+.board.on,
+body.preview .board{
+  display:grid; grid-template-rows:auto 1fr auto; row-gap:44px;
+}
+body.preview .board{outline:1px solid rgba(128,128,128,.35)}
+
+.corpo{min-height:0; display:flex; flex-direction:column; justify-content:center; gap:32px}
+.corpo.topo{justify-content:flex-start}
+.corpo.fim{justify-content:flex-end}
+.corpo.espalha{justify-content:space-between}
+
+/* ------------------------------------------------------------- tipografia --
+   Tamanhos em cqw: escalam com o frame, então o mesmo arquétipo serve
+   1080x1350, 1080x1920 e 1200x627 sem reescrever nada. */
+.board{container-type:size}
+
+.kicker{font:600 2.2cqw/1 var(--font-body); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); display:flex; align-items:center; gap:1.8cqw; margin:0}
+.kicker::after{content:""; flex:1; height:1px; background:var(--line)}
+
+.titulo{font-family:var(--font-display); font-weight:var(--display-w);
+  letter-spacing:var(--display-track); line-height:1.02; margin:0; text-wrap:balance;
+  font-size:8.4cqw}
+.titulo.xl{font-size:11.4cqw; line-height:.96}
+.titulo.sm{font-size:6.4cqw}
+.texto{font:400 3.1cqw/1.42 var(--font-body); color:var(--muted); margin:0; text-wrap:pretty}
+.texto.forte{color:var(--fg)}
+
+/* =========================================================== ARQUÉTIPOS ==== */
+
+/* 1. capa tipográfica — a frase é o produto */
+.a-capa-tipo .corpo{justify-content:center; gap:2.6cqw}
+
+/* 2. capa com foto — moldura grande no topo, texto embaixo */
+.a-capa-foto .corpo{justify-content:flex-start; gap:3cqw}
+.a-capa-foto .moldura{flex:1; min-height:0}
+
+/* 3. declaração — uma frase só, ocupando o frame. Usa quando não há o que somar. */
+.a-declaracao .corpo{justify-content:center}
+.a-declaracao .titulo{font-size:9cqw}
+
+/* 4. dados — a grade que substitui adjetivo por número */
+.a-dados .grade{display:grid; grid-template-columns:1fr 1fr; border-top:var(--borda) solid var(--line)}
+.a-dados .grade > div{padding:3.6cqw 0; border-bottom:var(--borda) solid var(--line);
+  display:flex; flex-direction:column; gap:.6cqw}
+.a-dados .grade > div:nth-child(odd){padding-right:2.4cqw}
+.a-dados dt{font:500 2.1cqw/1 var(--font-body); letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.a-dados dd{margin:0; font:600 4.8cqw/1.1 var(--font-body); font-variant-numeric:tabular-nums}
+
+/* 5. lista — uma ideia por linha, numerada */
+.a-lista ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;
+  gap:2.2cqw; counter-reset:i}
+.a-lista li{display:flex; gap:2cqw; align-items:baseline; font:400 3.6cqw/1.32 var(--font-body)}
+.a-lista li::before{content:counter(i,decimal-leading-zero); counter-increment:i;
+  font:600 2.1cqw/1 var(--font-display); color:var(--accent); letter-spacing:.06em}
+
+/* 6. foto sangrada — a foto É o board */
+.a-foto-cheia{padding:0}
+.a-foto-cheia .sangra{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.a-foto-cheia .sobre{position:absolute; inset:auto 0 0 0;
+  padding:calc(var(--pad)) var(--pad) calc(var(--pad) + var(--safe-bottom));
+  background:linear-gradient(transparent, rgb(0 0 0/.72) 45%); color:#fff}
+.a-foto-cheia .sobre .titulo,.a-foto-cheia .sobre .texto{color:#fff}
+
+/* 7. número grande — uma métrica carrega o board */
+.a-numero .corpo{justify-content:center; gap:1cqw}
+.a-numero .valor{font-family:var(--font-display); font-weight:var(--display-w);
+  font-size:30cqw; line-height:.82; letter-spacing:-.04em; color:var(--accent);
+  font-variant-numeric:tabular-nums}
+
+/* 8. CTA — o bloco de ação */
+.a-cta .corpo{justify-content:flex-end; gap:2.4cqw}
+
+/* ============================================================== PEÇAS ====== */
+
+.moldura{width:100%; border-radius:var(--radius-frame); object-fit:cover; display:block;
+  box-shadow:var(--sombra)}
+.painel{background:var(--ambiente); border:var(--borda) solid var(--line);
+  border-radius:var(--radius-card); padding:3.4cqw 3.6cqw; box-shadow:var(--sombra)}
+
+/* preenchimento com o accent-2. O texto por cima é --on-accent e NÃO é opcional:
+   em marca clara o branco reprova, em marca escura o preto reprova. */
+.bloco{background:var(--accent-2); color:var(--on-accent); border-radius:var(--radius-card);
+  padding:3.4cqw 3.6cqw; display:flex; flex-direction:column; gap:1cqw}
+.bloco .rot{font:500 2.4cqw/1 var(--font-body)}
+.bloco .val{font:800 4.6cqw/1.06 var(--font-body); letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+
+.chips{display:flex; flex-wrap:wrap; gap:1.2cqw}
+.chips span{background:var(--ambiente); border:var(--borda) solid var(--line);
+  border-radius:var(--radius-chip); padding:1.4cqw 2cqw; font:500 2.5cqw/1 var(--font-body)}
+
+/* assinatura — o rodapé de toda peça. Onde vai o CRECI, o handle, o logo. */
+.sig{display:flex; align-items:flex-end; justify-content:space-between; gap:2cqw;
+  border-top:var(--borda) solid var(--line); padding-top:2.4cqw}
+.sig .marca{font:600 3.4cqw/1 var(--font-marca, var(--font-display)); letter-spacing:-.02em}
+.sig img{height:3.6cqw; width:auto; display:block}
+.sig .legal{font:500 1.7cqw/1.5 var(--font-body); letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.sig .fim{font:500 2.2cqw/1 var(--font-body); color:var(--accent); text-align:right}
+.swipe{font:600 2.3cqw/1 var(--font-body); display:flex; align-items:center; gap:.8cqw}
+.swipe::after{content:"→"; color:var(--accent)}
+.index{position:absolute; top:calc(var(--pad) + var(--safe-top)); right:var(--pad);
+  font:600 1.9cqw/1 var(--font-body); color:var(--muted); letter-spacing:.1em}
+
+/* ============================================================ 9. CAMPO ======
+   O arquétipo que saiu de uma peça imobiliária — e o que mais funcionou.
+
+   Um campo de cor ocupa a faixa superior; a foto CRUZA a fronteira dele. É esse
+   cruzamento que cria tensão: board onde tudo respeita a margem é board sem
+   graça. Alterne a cor do campo entre os slides (--ambiente / --accent-2 /
+   superfície clara) e o carrossel ganha ritmo sem repetir layout.
+
+   ⚠ `.campo-shot` tem ALTURA EXPLÍCITA de propósito. Com `aspect-ratio` numa
+   caixa absoluta a imagem cresce para baixo sem limite e cobre dados e
+   assinatura — bug real, custou um render inteiro. */
+.a-campo{padding:0}
+.a-campo .campo{position:absolute;inset:0 0 40% 0;background:var(--ambiente)}
+.a-campo .campo.forte{background:var(--accent-2)}
+.a-campo .campo::after{content:"";position:absolute;left:0;bottom:0;width:34%;
+  height:1.2cqw;background:var(--accent-2)}
+.a-campo .campo.forte::after{background:var(--accent)}
+
+.a-campo > .kicker,.a-campo > .titulo{position:absolute;left:var(--pad);right:var(--pad)}
+.a-campo > .kicker{top:calc(var(--pad) + var(--safe-top))}
+.a-campo > .titulo{top:calc(var(--pad) + var(--safe-top) + 5cqw);font-size:13.2cqw;
+  line-height:.87;max-width:10ch}
+
+.a-campo .campo-shot{position:absolute;left:var(--pad);right:var(--pad);top:44%;
+  height:30%;object-fit:cover;border-radius:var(--radius-frame);box-shadow:var(--sombra)}
+
+.a-campo .rodape{position:absolute;left:var(--pad);right:var(--pad);
+  bottom:calc(var(--pad) + var(--safe-bottom))}
